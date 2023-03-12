@@ -1,39 +1,35 @@
-.POSIX:
-
 include config.mk
 
 .DEFAULT_GOAL: help
 
-
 .SILENT: help
+.PHONY: help # show this help message
 help:
-	printf "%s \\t\\t %s\n" "help" "show this help message"
-	printf "%s \\t\\t %s\n" "all" "clean, install deps, build"
-	printf "%s \\t %s\n" "install" "install with go install"
-	printf "%s \\t\\t %s\n" "image" "create docker image"
-	printf "%s \\t\\t %s\n" "rmi" "remove docker image"
-	printf "%s \\t\\t %s\n" "build" "build from sources"
-	printf "%s \\t\\t %s\n" "clean" "clean build file"
-	printf "%s \\t\\t %s\n" "deps" "install dependencies"
+	@grep -E '^.PHONY:.+#.+' Makefile | sed 's/.PHONY: //' | awk -F ' # ' '{printf "%-15s %s\n", $$1, $$2}'
 
+.PHONY: all # clean, install deps, build
 all: clean deps build
 
+.PHONY: install # install with go install
 install: $(BIN)$(OBJ)
 	$(GOINSTALL)
 
+.PHONY: image # create docker image
 image: build
 	$(DOCKERBUILD) -t $(IMAGENAME) .
 
+.PHONY: rmi # remove docker image
 rmi:
 	$(DOCKERRMI) $(IMAGENAME)
 
+.PHONY: build # build from sources
 build:
 	$(GOBUILD) -o $(BIN)$(OBJ)
 
+.PHONY: clean # clean build file
 clean:
 	rm -f $(BIN)$(OBJ)
 
+.PHONY: deps # install dependencies
 deps:
 	$(GOMODTIDY)
-
-.PHONY: help all install image rmi build clean deps
