@@ -16,7 +16,7 @@ install: $(BIN)$(OBJ)
 
 .PHONY: image # create docker image
 image: build
-	$(DOCKERBUILD) -t $(IMAGENAME) .
+	$(DOCKERBUILD) -f $(DOCKERFILE) -t $(IMAGENAME) .
 
 .PHONY: rmi # remove docker image
 rmi:

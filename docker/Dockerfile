@@ -1,6 +1,6 @@
 FROM golang:alpine3.13
 
-LABEL maintainer="riccardodpr@gmail.com"
+LABEL maintainer="Riccardo Armando Di Prinzio (ricdip)"
 
 COPY . /go/src/multidownloader
 
