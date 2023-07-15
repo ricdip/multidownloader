@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"downloader/src/flags"
-	"downloader/src/supervisor"
-	"downloader/src/utils"
+	"multidownloader/src/flags"
+	"multidownloader/src/supervisor"
+	"multidownloader/src/utils"
 
 	"github.com/spf13/cobra"
 )
@@ -30,6 +30,13 @@ func init() {
 		"each link to download (-l <link_1> -l <link_2> ...)",
 	)
 	rootCmd.MarkFlagRequired("link")
+	rootCmd.Flags().BoolVarP(
+		&flags.AutoYes,
+		"yes",
+		"y",
+		false,
+		"automatic yes to prompt",
+	)
 	rootCmd.Flags().BoolVarP(
 		&flags.DebugLog,
 		"debug",

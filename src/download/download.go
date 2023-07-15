@@ -7,7 +7,9 @@ import (
 	"path"
 	"sync"
 
-	bar "downloader/src/bar"
+	"multidownloader/src/bar"
+
+	zlog "github.com/rs/zerolog/log"
 )
 
 func downloadAux(link string, index int) (int64, error) {
@@ -35,7 +37,10 @@ func downloadAux(link string, index int) (int64, error) {
 }
 
 func Download(waitGroup *sync.WaitGroup, link string, index int) {
+	zlog.Trace().Caller().Str("function", "download.Download").Msg("start")
 	defer waitGroup.Done()
 
 	downloadAux(link, index)
+
+	zlog.Trace().Caller().Str("function", "download.Download").Msg("exit")
 }

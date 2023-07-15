@@ -3,10 +3,33 @@
 This program downloads the links passed as arguments.
 Multidownloader is written in Go and can be containerized using Docker.
 
-## Build program
+## Help message
+
+```
+Downloads the links passed as arguments
+
+Usage:
+  multidownloader [flags]
+
+Flags:
+  -c, --color              enable colored logging
+  -d, --debug              enable debug logging
+  -h, --help               help for multidownloader
+  -l, --link stringArray   each link to download (-l <link_1> -l <link_2> ...)
+  -v, --version            version for multidownloader
+  -y, --yes                automatic yes to prompt
+```
+
+## Build
 
 ```bash
-user@host:~$ make all
+user@host:~$ make build
+```
+
+## Install
+
+```bash
+user@host:~$ make install
 ```
 
 ## Create Docker image
@@ -21,14 +44,14 @@ user@host:~$ make image
 user@host:~$ make rmi
 ```
 
-## Use Multidownloader from host
+## Run from host (after install)
 
 ```bash
-user@host:~$ bin/multidownloader <link_1> <link_2>
+user@host:~$ multidownloader -l <link_1> -l <link_2>
 ```
 
-## Use Multidownloader from Docker container
+## Run from Docker container
 
 ```bash
-user@host:~$ docker run -v $(pwd):/downloads -it ricdip/multidownloader:latest <link_1> <link_2>
+user@host:~$ docker run --rm -v $(pwd):/downloads -it ricdip/multidownloader:latest -l <link_1> -l <link_2>
 ```

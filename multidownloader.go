@@ -1,7 +1,7 @@
 package main
 
 import (
-	"downloader/src/cmd"
+	"multidownloader/src/cmd"
 )
 
 func main() {

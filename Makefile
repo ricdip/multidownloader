@@ -7,9 +7,6 @@ include config.mk
 help:
 	@grep -E '^.PHONY:.+#.+' Makefile | sed 's/.PHONY: //' | awk -F ' # ' '{printf "%-15s %s\n", $$1, $$2}'
 
-.PHONY: all # clean, install deps, build
-all: clean deps build
-
 .PHONY: install # install with go install
 install: $(BIN)$(OBJ)
 	$(GOINSTALL)
@@ -23,12 +20,13 @@ rmi:
 	$(DOCKERRMI) $(IMAGENAME)
 
 .PHONY: build # build from sources
-build:
+build: clean deps
 	$(GOBUILD) -o $(BIN)$(OBJ)
 
 .PHONY: clean # clean build file
 clean:
-	rm -f $(BIN)$(OBJ)
+	$(GOCLEAN) -i
+	rm -rf $(BIN)
 
 .PHONY: deps # install dependencies
 deps:

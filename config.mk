@@ -3,6 +3,7 @@ GOBUILD = $(GO) build
 GOMOD = $(GO) mod
 GOFMT = $(GO) fmt
 GOINSTALL = $(GO) install
+GOCLEAN = $(GO) clean
 GOMODTIDY = $(GOMOD) tidy
 DOCKER = docker
 DOCKERBUILD = $(DOCKER) build

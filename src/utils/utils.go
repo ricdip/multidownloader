@@ -3,8 +3,6 @@ package utils
 import (
 	"fmt"
 	"net/url"
-
-	printer "downloader/src/printer"
 )
 
 func CheckDownloadLinks(links []string) error {
@@ -21,9 +19,4 @@ func CheckDownloadLinks(links []string) error {
 	}
 
 	return nil
-}
-
-func WaitUser() {
-	printer.WaitUserMsg()
-	fmt.Scanln()
 }

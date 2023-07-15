@@ -7,10 +7,10 @@ COPY . /go/src/multidownloader
 RUN apk update && \
     apk add make && \
     cd /go/src/multidownloader && \
-    make all && \
+    make build && \
     make install
 
 WORKDIR /downloads
 
-ENTRYPOINT ["downloader"]
+ENTRYPOINT ["multidownloader"]
 CMD ["--help"]

@@ -4,19 +4,29 @@ import (
 	"fmt"
 	"sync"
 
-	bar "downloader/src/bar"
-	download "downloader/src/download"
-	"downloader/src/flags"
-	printer "downloader/src/printer"
-	utils "downloader/src/utils"
+	"multidownloader/src/bar"
+	"multidownloader/src/download"
+	"multidownloader/src/flags"
+	"multidownloader/src/log"
+
+	zlog "github.com/rs/zerolog/log"
 )
 
 var waitGroup sync.WaitGroup
 
 func Exec() {
-	printer.PrintDownloadLinks(*flags.Links)
+	log.Init()
 
-	utils.WaitUser()
+	zlog.Trace().Caller().Str("function", "supervisor.Exec").Msg("start")
+
+	for i, v := range *flags.Links {
+		zlog.Info().Str("link", v).Int("index", i).Msg("detected")
+	}
+
+	if !flags.AutoYes {
+		zlog.Info().Msg("Press [ENTER] to continue...")
+		fmt.Scanln()
+	}
 
 	bar.CreateBars(len(*flags.Links))
 	for i, link := range *flags.Links {
@@ -25,6 +35,5 @@ func Exec() {
 	}
 	waitGroup.Wait()
 
-	fmt.Println()
-	fmt.Println("Exiting")
+	zlog.Trace().Caller().Str("function", "supervisor.Exec").Msg("exit")
 }
