@@ -33,3 +33,7 @@ clean:
 .PHONY: deps # install dependencies
 deps:
 	$(GOMODTIDY)
+
+.PHONY: format # format go source files
+format:
+	$(GOFMT) ./...

@@ -7,7 +7,7 @@ import (
 	"path"
 	"sync"
 
-	bar "downloader/mod/bar"
+	bar "downloader/src/bar"
 )
 
 func downloadAux(link string, index int) (int64, error) {
