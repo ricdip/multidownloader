@@ -3,7 +3,20 @@
 This program downloads the links passed as arguments.
 Multidownloader is written in Go and can be containerized using Docker.
 
-## Help message
+## Makefile help message
+
+```
+help            show this help message
+install         install with go install
+image           create docker image
+rmi             remove docker image
+build           build from sources
+clean           clean build file
+deps            install dependencies
+format          format go source files
+```
+
+## Multidownloader help message
 
 ```
 Downloads the links passed as arguments
@@ -16,6 +29,7 @@ Flags:
   -d, --debug              enable debug logging
   -h, --help               help for multidownloader
   -l, --link stringArray   each link to download (-l <link_1> -l <link_2> ...)
+  -q, --quiet              enable quiet logging (implies --yes)
   -v, --version            version for multidownloader
   -y, --yes                automatic yes to prompt
 ```

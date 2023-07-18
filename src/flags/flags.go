@@ -5,4 +5,5 @@ var (
 	AutoYes    bool
 	ColoredLog bool
 	DebugLog   bool
+	QuietLog   bool
 )

@@ -11,6 +11,8 @@ import (
 func Init() {
 	if flags.DebugLog {
 		zerolog.SetGlobalLevel(zerolog.TraceLevel)
+	} else if flags.QuietLog {
+		zerolog.SetGlobalLevel(zerolog.WarnLevel)
 	} else {
 		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	}

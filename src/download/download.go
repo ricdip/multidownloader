@@ -8,31 +8,40 @@ import (
 	"sync"
 
 	"multidownloader/src/bar"
+	"multidownloader/src/flags"
 
 	zlog "github.com/rs/zerolog/log"
 )
 
 func downloadAux(link string, index int) (int64, error) {
 	resp, err := http.Get(link)
-	size := resp.ContentLength
 
 	if err != nil {
+		zlog.Error().Err(err).Msg("HTTP GET request")
 		return -1, err
 	}
 	defer resp.Body.Close()
 
 	file, err := os.Create(path.Base(resp.Request.URL.String()))
 	if err != nil {
+		zlog.Error().Err(err).Msg("file create")
 		return -1, err
 	}
 	defer file.Close()
 
-	ch := make(chan struct{})
-	go bar.ShowBar(ch, size, file, index)
+	var read int64
+	if !flags.QuietLog {
+		size := resp.ContentLength
+		ch := make(chan struct{})
 
-	read, err := io.Copy(file, resp.Body)
+		go bar.ShowBar(ch, size, file, index)
 
-	<-ch
+		read, err = io.Copy(file, resp.Body)
+		<-ch
+	} else {
+		read, err = io.Copy(file, resp.Body)
+	}
+
 	return read, err
 }
 

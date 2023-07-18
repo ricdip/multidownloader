@@ -23,16 +23,20 @@ func Exec() {
 		zlog.Info().Str("link", v).Int("index", i).Msg("detected")
 	}
 
-	if !flags.AutoYes {
+	if !(flags.AutoYes || flags.QuietLog) {
 		zlog.Info().Msg("Press [ENTER] to continue...")
 		fmt.Scanln()
 	}
 
-	bar.CreateBars(len(*flags.Links))
+	if !flags.QuietLog {
+		bar.CreateBars(len(*flags.Links))
+	}
+
 	for i, link := range *flags.Links {
 		waitGroup.Add(1)
 		go download.Download(&waitGroup, link, i)
 	}
+
 	waitGroup.Wait()
 
 	zlog.Trace().Caller().Str("function", "supervisor.Exec").Msg("exit")

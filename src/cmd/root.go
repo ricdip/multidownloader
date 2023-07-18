@@ -51,6 +51,14 @@ func init() {
 		false,
 		"enable colored logging",
 	)
+	rootCmd.Flags().BoolVarP(
+		&flags.QuietLog,
+		"quiet",
+		"q",
+		false,
+		"enable quiet logging (implies --yes)",
+	)
+	rootCmd.MarkFlagsMutuallyExclusive("debug", "quiet")
 }
 
 func Execute() {
